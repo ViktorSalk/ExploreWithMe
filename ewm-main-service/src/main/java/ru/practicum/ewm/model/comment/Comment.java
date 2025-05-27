@@ -1,4 +1,4 @@
-package ru.practicum.ewm.model;
+package ru.practicum.ewm.model.comment;
 
 
 import jakarta.persistence.Column;
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.practicum.ewm.model.User;
 import ru.practicum.ewm.model.event.Event;
 
 import java.time.LocalDateTime;

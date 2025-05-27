@@ -1,4 +1,4 @@
-package ru.practicum.ewm.controller.pub;
+package ru.practicum.ewm.controller.pub.comment;
 
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.ewm.model.Comment;
-import ru.practicum.ewm.service.CommentService;
+import ru.practicum.ewm.model.comment.Comment;
+import ru.practicum.ewm.service.comment.CommentService;
 
 import java.util.List;
 

@@ -10,15 +10,15 @@ import ru.practicum.ewm.dto.comment.NewCommentDto;
 import ru.practicum.ewm.dto.comment.UpdateCommentDto;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.UncorrectedParametersException;
-import ru.practicum.ewm.model.Comment;
+import ru.practicum.ewm.model.comment.Comment;
 import ru.practicum.ewm.model.User;
 import ru.practicum.ewm.model.constants.EventStatus;
 import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.mappers.CommentMapper;
-import ru.practicum.ewm.repository.CommentRepository;
+import ru.practicum.ewm.repository.comment.CommentRepository;
 import ru.practicum.ewm.repository.UserRepository;
 import ru.practicum.ewm.repository.event.EventRepository;
-import ru.practicum.ewm.service.CommentService;
+import ru.practicum.ewm.service.comment.CommentService;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

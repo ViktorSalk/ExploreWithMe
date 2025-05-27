@@ -1,10 +1,10 @@
-package ru.practicum.ewm.service;
+package ru.practicum.ewm.service.comment;
 
 
 import ru.practicum.ewm.dto.comment.CommentDto;
 import ru.practicum.ewm.dto.comment.NewCommentDto;
 import ru.practicum.ewm.dto.comment.UpdateCommentDto;
-import ru.practicum.ewm.model.Comment;
+import ru.practicum.ewm.model.comment.Comment;
 
 import java.util.List;
 

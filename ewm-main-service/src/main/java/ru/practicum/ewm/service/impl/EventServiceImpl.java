@@ -18,10 +18,6 @@ import ru.practicum.ewm.EndpointHit;
 import ru.practicum.ewm.StatsClient;
 import ru.practicum.ewm.ViewStats;
 import ru.practicum.ewm.dto.CaseUpdatedStatusDto;
-import ru.practicum.ewm.dto.event.EventFullDto;
-import ru.practicum.ewm.dto.event.EventRequestStatusUpdateRequest;
-import ru.practicum.ewm.dto.event.EventRequestStatusUpdateResult;
-import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.dto.NewEventDto;
 import ru.practicum.ewm.dto.ParticipationRequestDto;
 import ru.practicum.ewm.dto.SearchEventParams;
@@ -29,11 +25,15 @@ import ru.practicum.ewm.dto.SearchEventParamsAdmin;
 import ru.practicum.ewm.dto.UpdateEventAdminRequest;
 import ru.practicum.ewm.dto.UpdateEventRequest;
 import ru.practicum.ewm.dto.UpdateEventUserRequest;
+import ru.practicum.ewm.dto.comment.CountCommentsByEventDto;
+import ru.practicum.ewm.dto.event.EventFullDto;
+import ru.practicum.ewm.dto.event.EventRequestStatusUpdateRequest;
+import ru.practicum.ewm.dto.event.EventRequestStatusUpdateResult;
+import ru.practicum.ewm.dto.event.EventShortDto;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.UncorrectedParametersException;
 import ru.practicum.ewm.model.Category;
-import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.Location;
 import ru.practicum.ewm.model.Request;
 import ru.practicum.ewm.model.User;
@@ -41,14 +41,16 @@ import ru.practicum.ewm.model.constants.EventAdminState;
 import ru.practicum.ewm.model.constants.EventStatus;
 import ru.practicum.ewm.model.constants.EventUserState;
 import ru.practicum.ewm.model.constants.RequestStatus;
+import ru.practicum.ewm.model.event.Event;
 import ru.practicum.ewm.model.mappers.EventMapper;
 import ru.practicum.ewm.model.mappers.LocationMapper;
 import ru.practicum.ewm.model.mappers.RequestMapper;
 import ru.practicum.ewm.repository.CategoryRepository;
-import ru.practicum.ewm.repository.event.EventRepository;
+import ru.practicum.ewm.repository.comment.CommentRepository;
 import ru.practicum.ewm.repository.LocationRepository;
 import ru.practicum.ewm.repository.RequestRepository;
 import ru.practicum.ewm.repository.UserRepository;
+import ru.practicum.ewm.repository.event.EventRepository;
 import ru.practicum.ewm.service.event.EventService;
 
 import java.time.LocalDateTime;
@@ -67,6 +69,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
     private final StatsClient statsClient;
     private final RequestRepository requestRepository;
     private final LocationRepository locationRepository;
@@ -75,7 +78,6 @@ public class EventServiceImpl implements EventService {
 
     @Value("${server.application.name:ewm-service}")
     private String applicationName;
-
 
     @Override
     public List<EventFullDto> getAllEventFromAdmin(SearchEventParamsAdmin searchEventParamsAdmin) {
@@ -369,9 +371,17 @@ public class EventServiceImpl implements EventService {
                 .stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
         Map<Long, Long> viewStatsMap = getViewsAllEvents(resultEvents);
 
+        List<CountCommentsByEventDto> commentsCountMap = commentRepository.countCommentByEvent(
+                resultEvents.stream().map(Event::getId).collect(Collectors.toList()));
+        Map<Long, Long> commentsCountToEventIdMap = commentsCountMap.stream().collect(Collectors.toMap(
+                CountCommentsByEventDto::getEventId, CountCommentsByEventDto::getCountComments));
+
         for (EventShortDto event : result) {
             Long viewsFromMap = viewStatsMap.getOrDefault(event.getId(), 0L);
             event.setViews(viewsFromMap);
+
+            Long commentCountFromMap = commentsCountToEventIdMap.getOrDefault(event.getId(), 0L);
+            event.setComments(commentCountFromMap);
         }
 
         return result;
