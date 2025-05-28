@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import ru.practicum.ewm.constants.DateTimeConstants;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +31,7 @@ public class NewEventDto {
     @NotBlank
     @Length(max = 7000, min = 20)
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeConstants.DATE_TIME_PATTERN)
     private LocalDateTime eventDate;
     @NotNull
     @Valid

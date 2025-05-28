@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.practicum.ewm.constants.DateTimeConstants;
 import ru.practicum.ewm.dto.CategoryDto;
 import ru.practicum.ewm.dto.LocationDto;
 import ru.practicum.ewm.dto.UserShortDto;
@@ -23,16 +24,16 @@ public class EventFullDto {
     private String annotation;
     private CategoryDto category;
     private Integer confirmedRequests;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeConstants.DATE_TIME_PATTERN)
     private LocalDateTime createdOn;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeConstants.DATE_TIME_PATTERN)
     private LocalDateTime eventDate;
     private UserShortDto initiator;
     private LocationDto location;
     private Boolean paid;
     private Integer participantLimit;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeConstants.DATE_TIME_PATTERN)
     private LocalDateTime publishedOn;
     private Boolean requestModeration;
     private EventStatus state;
