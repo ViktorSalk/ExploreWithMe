@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.practicum.ewm.constants.DateTimeConstants;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,11 +22,9 @@ public class SearchEventParams {
     private String text;
     private List<Long> categories;
     private Boolean paid;
-    @JsonFormat
-            (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeConstants.DATE_TIME_PATTERN)
     private LocalDateTime rangeStart;
-    @JsonFormat
-            (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeConstants.DATE_TIME_PATTERN)
     private LocalDateTime rangeEnd;
     private Boolean onlyAvailable = false;
     private String sort;

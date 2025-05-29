@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>stat_server</artifactId>
+    <artifactId>stat-server</artifactId>
 
     <dependencies>
         <!-- Spring Boot Web -->
